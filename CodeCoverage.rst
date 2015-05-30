@@ -48,7 +48,7 @@ The following works with static and shared libraries:
 .. code-block:: cmake
 
    if(CodeCov_BUILD_COVERAGE)
-     add_library(<name>-coverage ${<NAME>_SOURCES})
+     add_library(<name>-coverage [...] ${<NAME>_SOURCES})
      add_coverage_target(<name>-coverage <LANG>)
 
      add_executable(<name>-coverage-driver [...] ${<NAME>_TESTCASE_SOURCES})
@@ -76,11 +76,11 @@ enclosing them in an ``if`` condition as in the examples above.
 Dependencies
 ============
 
-This modules currently supports GCC and clang[#]_. The lcov_ script is needed
+This modules currently supports GCC and clang[1]_. The lcov_ script is needed
 when building with GCC. If you need to install lcov in a nonstandard location,
 you can set ``CodeCov_GNU_LCOV`` and ``CodeCov_GNU_GENHTML`` in your project's
 CMake cache.
 
 .. _lcov: https://github.com/linux-test-project/lcov
 
-.. [#] clang support will actually be added in a couple of days.
+.. [1] clang support will actually be added in a couple of days.
