@@ -76,11 +76,11 @@ enclosing them in an ``if`` condition as in the examples above.
 Dependencies
 ============
 
-This modules currently supports GCC and clang[1]_. The lcov_ script is needed
+This modules currently supports GCC and clang [#]_. The lcov_ script is needed
 when building with GCC. If you need to install lcov in a nonstandard location,
 you can set ``CodeCov_GNU_LCOV`` and ``CodeCov_GNU_GENHTML`` in your project's
 CMake cache.
 
 .. _lcov: https://github.com/linux-test-project/lcov
 
-.. [1] clang support will actually be added in a couple of days.
+.. [#] clang support will actually be added in a couple of days.
