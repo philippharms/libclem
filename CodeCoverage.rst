@@ -24,6 +24,9 @@ To invoke the coverage, run:
 
     $ make && make coverage
 
+The command creates HTML pages in your project's binary tree in a
+``coverage`` subdirectory, which you can browse in your favorite browser.
+
 Executables
 -----------
 
@@ -53,3 +56,31 @@ The following works with static and shared libraries:
      add_coverage_run(coverage_run_01 <name>-coverage-driver <args>)
    endif()
 
+Disabling Coverage Tests
+========================
+
+The module creates an option ``CodeCov_BUILD_COVERAGE`` which defaults to
+``On``. You can either invoke CMake with ``-DCodeCov_BUILD_COVERAGE=Off`` to
+disable coverage targets or set the option in your scripts before inclusion:
+
+.. code-block:: cmake
+
+   option(CodeCov_BUILD_COVERAGE "Build coverage targets" Off)
+   include(CodeCoverage)
+
+Internally, this only disables the creation of the ``coverage`` target and its
+associated runs (which are created by ``add_coverage_run``). It will not prevent
+your binaries from being recompiled with coverage flags. This is done by
+enclosing them in an ``if`` condition as in the examples above.
+
+Dependencies
+============
+
+This modules currently supports GCC and clang[#]_. The lcov_ script is needed
+when building with GCC. If you need to install lcov in a nonstandard location,
+you can set ``CodeCov_GNU_LCOV`` and ``CodeCov_GNU_GENHTML`` in your project's
+CMake cache.
+
+.. _lcov: https://github.com/linux-test-project/lcov
+
+.. [#] clang support will actually be added in a couple of days.
