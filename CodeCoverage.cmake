@@ -22,6 +22,10 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+if(NOT DEFINED CodeCov_BUILD_COVERAGE)
+  option(CodeCov_BUILD_COVERAGE "Build coverage targets" On)
+endif()
+
 function(_codecov_failure_message msg)
   message(FATAL_ERROR "${msg}")
 endfunction()
