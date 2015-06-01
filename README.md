@@ -11,7 +11,9 @@ the `CMake/Modules` subdirectory. To do so, type:
     $ cd <project-dir>
     $ git subtree add --squash --prefix=CMake/Modules https://github.com/philippharms/cmake-modules.git master
 
-To pull changes of the modules from this repository, type:
+Then add `list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMake/Modules")` to
+your top-level `CMakeLists.txt` to let CMake find the new modules. To pull
+changes of the modules from this repository, type:
 
     $ cd <project-dir>
     $ git subtree pull --squash --prefix=CMake/Modules https://github.com/philippharms/cmake-modules.git master
