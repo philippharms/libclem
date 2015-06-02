@@ -146,11 +146,11 @@ endfunction()
 function(add_coverage_run name command)
   if(CMAKE_HOST_UNIX)
     set(failsafe_command
-      ${command} ${ARGV2} > /dev/null ||
+      ${command} ${ARGN} > /dev/null ||
         ${CMAKE_COMMAND} -E echo "Coverage run returned non-zero exit code")
   elseif(CMAKE_HOST_WIN32)
     set(failsafe_command
-      ${command} ${ARGV2} > NUL ||
+      ${command} ${ARGN} > NUL ||
         ${CMAKE_COMMAND} -E echo "Coverage run returned non-zero exit code")
   else()
     message(
