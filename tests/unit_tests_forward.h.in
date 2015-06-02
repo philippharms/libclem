@@ -1,0 +1,13 @@
+/*
+ * This file has been created automatically by @CMAKE_COMMAND@ @CMAKE_VERSION@
+ * on @CLEM_BUILD_DATE@ for @CMAKE_PROJECT_NAME@.
+ *
+ *                         *** Do not edit manually ***
+ */
+
+#ifndef UNIT_TESTS_FORWARD_H
+#define UNIT_TESTS_FORWARD_H
+
+#include <unit_tests.h>
+@UNIT_TEST_FORWARDS@
+#endif

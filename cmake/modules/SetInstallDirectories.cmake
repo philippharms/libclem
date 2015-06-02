@@ -24,11 +24,12 @@
 
 message(STATUS "Setting up install paths")
 
-if(CMAKE_SYSTEM_NAME EQUALS "Windows")
+if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
   message(FATAL_ERROR "not yet implemented")
-elseif(CMAKE_SYSTEM_NAME EQUALS "Darwin" AND NOT IOS)
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin" AND NOT IOS)
   message(FATAL_ERROR "not yet implemented")
-else(CMAKE_SYSTEM_NAME EQUALS "Linux" OR CMAKE_SYSTEM_NAME EQUALS "FreeBSD")
+else(CMAKE_SYSTEM_NAME STREQUAL "Linux" OR
+     CMAKE_SYSTEM_NAME STREQUAL "FreeBSD")
   include(GNUInstallDirs)
 endif()
 

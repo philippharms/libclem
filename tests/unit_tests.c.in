@@ -1,0 +1,75 @@
+/*
+ * This file has been created automatically by @CMAKE_COMMAND@ @CMAKE_VERSION@
+ * on @CLEM_BUILD_DATE@ for @CMAKE_PROJECT_NAME@.
+ *
+ *                         *** Do not edit manually ***
+ */
+
+#include "unit_tests_forward.h"
+
+#include <string.h>
+
+struct unit_test_list {
+  const char       *name;
+  test_function_t   f;
+  unit_test_list_t  tail;
+};
+
+void unit_test_free_list(unit_test_list_t list) {
+  unit_test_list_t tmp;
+
+  while (list != NULL) {
+    tmp  = list;
+    list = list->tail;
+    free(tmp);
+  }
+}
+
+test_function_t unit_test_get_by_name(unit_test_list_t list,
+                                      const char* name) {
+
+  while (list != NULL) {
+    if (strcmp(list->name, name) == 0) {
+      return list->f;
+    } else {
+      list = list->tail;
+    }
+  }
+
+  return NULL;
+}
+
+#define UNIT_TEST_SAVE_SET(ptr, value) \
+  if (ptr) { \
+    *ptr = value; \
+  }
+
+// adds a unit test to the list, a function of the same name must be defined
+// somewhere
+#define UNIT_TEST_ADD_TEST(unit_test) \
+  { \
+    unit_test_list_t next = malloc(sizeof(struct unit_test_list)); \
+ \
+    if (next == NULL)  { \
+      UNIT_TEST_SAVE_SET(err, UNIT_TEST_OUT_OF_MEMORY); \
+      unit_test_free_list(begin); \
+      return NULL; \
+    } \
+ \
+    next->name = #unit_test; next->f = unit_test; next->tail = NULL; \
+ \
+    if (begin == NULL) { \
+      begin = next; end = next; \
+    } else { \
+      end->tail = next; end = next; \
+    } \
+  }
+
+unit_test_list_t unit_test_initialize_list(unit_test_error_t *err) {
+  // end is a valid pointer to the last element (*not* past-the-end),
+  // if not empty
+  unit_test_list_t begin = NULL, end = NULL;
+@UNIT_TEST_INITS@
+
+  return begin;
+}
