@@ -1,8 +1,21 @@
 language: c
 
+sudo: required
+
+install:
+  - wget http://www.cmake.org/files/v3.2/cmake-3.2.3-Linux-x86_64.tar.gz
+  - tar -zxf cmake-3.2.3-Linux-x86_64.tar.gz
+  - export CMAKE=`pwd`/cmake-3.2.3-Linux-x86_64/bin/cmake
+  - sudo apt-get install -y lcov
+  - sudo pip install cpp-coveralls
+
 script:
-  - mkdir build
-  - cd build
-  - cmake ..
+  - mkdir build && cd build
+  - $CMAKE ..
   - make
   - make test
+  - make coverage
+  - cd ..
+
+after_success:
+  - coveralls --exclude cmake-3.2.3-Linux-x86_64 --exclude cmake --exclude build/CMakeFiles --gcov-options '\-lp'
