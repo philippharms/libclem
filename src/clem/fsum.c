@@ -88,16 +88,6 @@ float fsumf(const float *args, size_t argc, clem_error_t *err) {
         (result + 2.f*roundoff) - result == 2.f*roundoff) {
       result += 2.f*roundoff;
     }
-  } else if (old_mode == FE_DOWNWARD) {
-    if (roundoff != 0.f && samesignf(result, roundoff)) {
-      result += 2.f*roundoff;
-    }
-  } else if (old_mode == FE_TOWARDZERO) {
-    set_error_code(CLEM_NOT_IMPLEMENTED, err);
-    result = 0.f;
-  } else if (old_mode == FE_UPWARD) {
-    set_error_code(CLEM_NOT_IMPLEMENTED, err);
-    result = 0.f;
   } else {
     set_error_code(CLEM_UNKNOWN_ROUNDING_MODE, err);
     result = 0.f;
