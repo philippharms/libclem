@@ -30,6 +30,19 @@ function(_codecov_failure_message msg)
   message(FATAL_ERROR "${msg}")
 endfunction()
 
+macro(_codecov_gnu_lcov_branch_workaround)
+  execute_process(COMMAND ${CodeCov_GNU_LCOV} "--version"
+                  OUTPUT_VARIABLE _codecov_gnu_lcov_version_dump)
+  string(REGEX MATCH "[0-9.]+" _codecov_gnu_lcov_version_string
+         ${_codecov_gnu_lcov_version_dump})
+  if(_codecov_gnu_lcov_version_string AND
+     _codecov_gnu_lcov_version_string VERSION_LESS "1.10")
+    set(_CodeCov_GNU_LCOV_BRANCH_COVERAGE_OPTION "")
+  else()
+    set(_CodeCov_GNU_LCOV_BRANCH_COVERAGE_OPTION "--rc" "lcov_branch_coverage=1")
+  endif()
+endmacro()
+
 function(_codecov_gnu_setup)
   find_program(CodeCov_GNU_LCOV lcov)
   find_program(CodeCov_GNU_GENHTML genhtml)
@@ -52,16 +65,18 @@ function(_codecov_gnu_setup)
 
   mark_as_advanced(CodeCov_GNU_LCOV CodeCov_GNU_GENHTML)
 
+  _codecov_gnu_lcov_branch_workaround()
+
   add_custom_target(codecov_prerun
-    ${CodeCov_GNU_LCOV} --quiet --rc lcov_branch_coverage=1 --directory . --zerocounters
+    ${CodeCov_GNU_LCOV} --quiet --directory . --zerocounters ${_CodeCov_GNU_LCOV_BRANCH_COVERAGE_OPTION}
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
   COMMENT "Cleaning up coverage statistics")
 
   add_custom_target(codecov_postrun
-    ${CodeCov_GNU_LCOV} --quiet --rc lcov_branch_coverage=1 --directory . --capture --output-file coverage.info
-    COMMAND ${CodeCov_GNU_LCOV} --quiet --rc lcov_branch_coverage=1 --remove coverage.info '/usr/*' --output-file coverage.info.cleaned
-    COMMAND ${CodeCov_GNU_LCOV} --rc lcov_branch_coverage=1 --summary coverage.info.cleaned
-    COMMAND ${CodeCov_GNU_GENHTML} --quiet --rc lcov_branch_coverage=1 -o coverage coverage.info.cleaned
+    ${CodeCov_GNU_LCOV} --quiet --directory . --capture --output-file coverage.info ${_CodeCov_GNU_LCOV_BRANCH_COVERAGE_OPTION}
+    COMMAND ${CodeCov_GNU_LCOV} --quiet --remove coverage.info '/usr/*' --output-file coverage.info.cleaned ${_CodeCov_GNU_LCOV_BRANCH_COVERAGE_OPTION}
+    COMMAND ${CodeCov_GNU_LCOV} --summary coverage.info.cleaned ${_CodeCov_GNU_LCOV_BRANCH_COVERAGE_OPTION}
+    COMMAND ${CodeCov_GNU_GENHTML} --quiet -o coverage coverage.info.cleaned ${_CodeCov_GNU_LCOV_BRANCH_COVERAGE_OPTION}
     COMMAND ${CMAKE_COMMAND} -E remove ${_outputname}.info ${_outputname}.info.cleaned
 
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
