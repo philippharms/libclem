@@ -82,7 +82,7 @@ if(BUILD_TESTING OR CodeCov_BUILD_COVERAGE)
 
   add_unit_test(det3x3f_test_01)
   add_unit_test(det3x3f_test_02)
-  # add_unit_test(det3x3f_test_03)
+  add_unit_test(det3x3f_test_03)
 
   add_unit_test(fsumf_test_basic_01)
   add_unit_test(fsumf_test_basic_02)
