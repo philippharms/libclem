@@ -65,6 +65,10 @@ if(BUILD_TESTING OR CodeCov_BUILD_COVERAGE)
   add_unit_test(matrix3x3f_buffer_test_07)
   add_unit_test(matrix3x3f_buffer_test_08)
 
+  add_unit_test(det3x3f_test_01)
+  add_unit_test(det3x3f_test_02)
+  # add_unit_test(det3x3f_test_03)
+
   configure_file("${CMAKE_CURRENT_SOURCE_DIR}/unit_tests.c.in"
                  "${CLEM_TEST_LIST_FILE}")
   configure_file("${CMAKE_CURRENT_SOURCE_DIR}/unit_tests_forward.h.in"
