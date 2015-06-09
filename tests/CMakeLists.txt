@@ -1,6 +1,7 @@
 set(CLEM_TEST_SOURCES "test_driver.c"
                       "matrix3x3f_buffer_test.c"
-                      "det3x3f_test.c")
+                      "det3x3f_test.c"
+                      "fsumf_test.c")
 
 if (BUILD_TESTING OR CodeCov_BUILD_COVERAGE)
   set(CLEM_TEST_LIST_FILE "${CMAKE_CURRENT_BINARY_DIR}/unit_tests.c")
@@ -21,12 +22,20 @@ if(BUILD_TESTING)
   else()
     target_link_libraries(clem-test-driver PRIVATE clem-static)
   endif()
+
+  if(CMAKE_C_NEEDS_LIBM)
+    target_link_libraries(clem-test-driver PRIVATE "m")
+  endif()
 endif()
 
 if(CodeCov_BUILD_COVERAGE)
   add_library(clem-coverage SHARED ${CLEM_SOURCES})
   set_property(TARGET clem-coverage PROPERTY C_STANDARD 11)
   add_coverage_target(clem-coverage C)
+
+  if(CMAKE_C_NEEDS_LIBM)
+    target_link_libraries(clem-coverage PRIVATE "m")
+  endif()
 
   add_executable(clem-coverage-driver ${CLEM_TEST_SOURCES})
   set_property(TARGET clem-coverage-driver APPEND PROPERTY
@@ -35,6 +44,12 @@ if(CodeCov_BUILD_COVERAGE)
   set_property(TARGET clem-coverage-driver PROPERTY C_STANDARD 11)
 
   target_link_libraries(clem-coverage-driver PRIVATE clem-coverage)
+
+  if(CMAKE_C_NEEDS_LIBM)
+    target_link_libraries(clem-coverage-driver PRIVATE "m")
+  else()
+    message(FATAL_ERROR "no")
+  endif()
 endif()
 
 if(BUILD_TESTING OR CodeCov_BUILD_COVERAGE)
@@ -68,6 +83,19 @@ if(BUILD_TESTING OR CodeCov_BUILD_COVERAGE)
   add_unit_test(det3x3f_test_01)
   add_unit_test(det3x3f_test_02)
   # add_unit_test(det3x3f_test_03)
+
+  add_unit_test(fsumf_test_basic_01)
+  add_unit_test(fsumf_test_basic_02)
+  add_unit_test(fsumf_test_basic_03)
+  add_unit_test(fsumf_test_roundtonearest_01)
+  add_unit_test(fsumf_test_roundtonearest_02)
+  add_unit_test(fsumf_test_roundtonearest_03)
+  # add_unit_test(fsumf_test_rounddownward_01)
+  # add_unit_test(fsumf_test_rounddownward_02)
+  # add_unit_test(fsumf_test_roundtowardzero_01)
+  # add_unit_test(fsumf_test_roundtowardzero_02)
+  # add_unit_test(fsumf_test_roundupward_01)
+  # add_unit_test(fsumf_test_roundupward_02)
 
   configure_file("${CMAKE_CURRENT_SOURCE_DIR}/unit_tests.c.in"
                  "${CLEM_TEST_LIST_FILE}")
