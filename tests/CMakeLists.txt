@@ -45,7 +45,7 @@ if(BUILD_TESTING OR CodeCov_BUILD_COVERAGE)
 
   function(add_unit_test test_name)
     set(UNIT_TEST_FORWARDS
-    "${UNIT_TEST_FORWARDS}\ntest_result_t ${test_name}(char **result_message);\n" PARENT_SCOPE)
+    "${UNIT_TEST_FORWARDS}\nunit_test_result_t ${test_name}(char **result_message);\n" PARENT_SCOPE)
     set(UNIT_TEST_INITS
         "${UNIT_TEST_INITS}\n  UNIT_TEST_ADD_TEST(${test_name});" PARENT_SCOPE)
     if(BUILD_TESTING)

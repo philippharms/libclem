@@ -1,5 +1,4 @@
 #include "unit_tests.h"
-#include "test.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -50,7 +49,7 @@ int main(int argc, char *argv[]) {
   }
 
   char *msg = NULL;
-  test_result_t result = test_case(&msg);
+  unit_test_result_t result = test_case(&msg);
 
   if (result != TEST_PASSED) {
     puts(msg);

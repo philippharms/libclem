@@ -1,11 +1,11 @@
 #include "clem/matrix3x3f_buffer.h"
 
-#include "test.h"
+#include "unit_tests.h"
 
 #include <string.h>
 #include <stdint.h>
 
-test_result_t matrix3x3f_buffer_test_01(char **result_message) {
+unit_test_result_t matrix3x3f_buffer_test_01(char **result_message) {
   clem_error_t err;
 
   matrix3x3f_buffer_t testee = matrix3x3f_buffer_create();
@@ -57,7 +57,7 @@ test_result_t matrix3x3f_buffer_test_01(char **result_message) {
   return TEST_PASSED;
 }
 
-test_result_t matrix3x3f_buffer_test_02(char **result_message) {
+unit_test_result_t matrix3x3f_buffer_test_02(char **result_message) {
   clem_error_t err;
 
   err = matrix3x3f_buffer_reserve(NULL, 0);
@@ -71,7 +71,7 @@ test_result_t matrix3x3f_buffer_test_02(char **result_message) {
   return TEST_PASSED;
 }
 
-test_result_t matrix3x3f_buffer_test_03(char **result_message) {
+unit_test_result_t matrix3x3f_buffer_test_03(char **result_message) {
   clem_error_t err;
 
   matrix3x3f_buffer_t testee = matrix3x3f_buffer_create();
@@ -87,7 +87,7 @@ test_result_t matrix3x3f_buffer_test_03(char **result_message) {
   return TEST_PASSED;
 }
 
-test_result_t matrix3x3f_buffer_test_04(char **result_message) {
+unit_test_result_t matrix3x3f_buffer_test_04(char **result_message) {
   clem_error_t err;
   matrix3x3f_t matrix = {{0.f, 1.f, 2.f},{3.f, 4.f, 5.f},{6.f, 7.f, 8.f}};
 
@@ -129,7 +129,7 @@ test_result_t matrix3x3f_buffer_test_04(char **result_message) {
   return TEST_PASSED;
 }
 
-test_result_t matrix3x3f_buffer_test_05(char **result_message) {
+unit_test_result_t matrix3x3f_buffer_test_05(char **result_message) {
   clem_error_t err;
 
   matrix3x3f_buffer_t testee = matrix3x3f_buffer_create();
@@ -145,7 +145,7 @@ test_result_t matrix3x3f_buffer_test_05(char **result_message) {
   return TEST_PASSED;
 }
 
-test_result_t matrix3x3f_buffer_test_06(char **result_message) {
+unit_test_result_t matrix3x3f_buffer_test_06(char **result_message) {
   clem_error_t err;
 
   matrix3x3f_t matrix = {{0.f, 1.f, 2.f},{3.f, 4.f, 5.f},{6.f, 7.f, 8.f}};
@@ -161,7 +161,7 @@ test_result_t matrix3x3f_buffer_test_06(char **result_message) {
   return TEST_PASSED;
 }
 
-test_result_t matrix3x3f_buffer_test_07(char **result_message) {
+unit_test_result_t matrix3x3f_buffer_test_07(char **result_message) {
   clem_error_t err;
 
   matrix3x3f_t result;
@@ -180,7 +180,7 @@ test_result_t matrix3x3f_buffer_test_07(char **result_message) {
   return TEST_PASSED;
 }
 
-test_result_t matrix3x3f_buffer_test_08(char **result_message) {
+unit_test_result_t matrix3x3f_buffer_test_08(char **result_message) {
   clem_error_t err;
 
   matrix3x3f_t matrix = {{0.f, 1.f, 2.f},{3.f, 4.f, 5.f},{6.f, 7.f, 8.f}};
