@@ -75,7 +75,6 @@ function(_codecov_gnu_setup)
   add_custom_target(codecov_postrun
     ${CodeCov_GNU_LCOV} --quiet --directory . --capture --output-file coverage.info ${_CodeCov_GNU_LCOV_BRANCH_COVERAGE_OPTION}
     COMMAND ${CodeCov_GNU_LCOV} --quiet --remove coverage.info '/usr/*' --output-file coverage.info.cleaned ${_CodeCov_GNU_LCOV_BRANCH_COVERAGE_OPTION}
-    COMMAND ${CodeCov_GNU_LCOV} --summary coverage.info.cleaned ${_CodeCov_GNU_LCOV_BRANCH_COVERAGE_OPTION}
     COMMAND ${CodeCov_GNU_GENHTML} --quiet -o coverage coverage.info.cleaned ${_CodeCov_GNU_LCOV_BRANCH_COVERAGE_OPTION}
     COMMAND ${CMAKE_COMMAND} -E remove ${_outputname}.info ${_outputname}.info.cleaned
 
