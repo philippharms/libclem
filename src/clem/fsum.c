@@ -45,10 +45,12 @@ float fsumf(const float *args, size_t argc, clem_error_t *err) {
   }
 
   int old_mode = fegetround();
-  int error    = fesetround(FE_TONEAREST);
-  if (error) {
-    set_error_code(CLEM_SET_FLOAT_ROUNDING_MODE_FAILED, err);
-    return 0.f;
+  if (old_mode != FE_TONEAREST) {
+    int error = fesetround(FE_TONEAREST);
+    if (error) {
+      set_error_code(CLEM_SET_FLOAT_ROUNDING_MODE_FAILED, err);
+      return 0.f;
+    }
   }
 
   float *expansion = (float*) malloc(argc * sizeof(float));
@@ -68,14 +70,16 @@ float fsumf(const float *args, size_t argc, clem_error_t *err) {
     expansion[i] = tmp;
   }
 
-  float result = expansion[argc-1], roundoff, nexttoroundoff = 0.f;
+  float result = expansion[argc-1], roundoff = 0.f, nexttoroundoff = 0.f;
 
-  for (size_t i=argc-2; i > 0; i--) {
-    result = sum2f_unchecked(result, expansion[i], &roundoff);
+  for (size_t i=2; i<=argc; i++) {
+    result = sum2f_unchecked(result, expansion[argc-i], &roundoff);
     if (roundoff != 0.f) {
-      while (nexttoroundoff == 0.f && i > 0) {
-        i = i-1;
-        nexttoroundoff = expansion[i];
+      for (size_t j=i+1; j<=argc; j++) {
+        nexttoroundoff = expansion[argc-j];
+        if (nexttoroundoff != 0.f) {
+          break;
+        }
       }
       break;
     }
@@ -87,6 +91,18 @@ float fsumf(const float *args, size_t argc, clem_error_t *err) {
     if (nexttoroundoff != 0.f && samesignf(roundoff, nexttoroundoff) &&
         (result + 2.f*roundoff) - result == 2.f*roundoff) {
       result += 2.f*roundoff;
+    }
+  } else if (old_mode == FE_DOWNWARD) {
+    if (roundoff < 0.f) {
+      result = nextafterf(result, -HUGE_VALF);
+    }
+  } else if (old_mode == FE_TOWARDZERO) {
+    if (!samesignf(result, roundoff)) {
+      result = nextafterf(result, 0.f);
+    }
+  } else if (old_mode == FE_UPWARD) {
+    if (roundoff > 0.f) {
+      result = nextafterf(result, HUGE_VALF);
     }
   } else {
     set_error_code(CLEM_UNKNOWN_ROUNDING_MODE, err);
