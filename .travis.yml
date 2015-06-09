@@ -11,7 +11,7 @@ install:
 
 script:
   - mkdir build && cd build
-  - $CMAKE ..
+  - $CMAKE -DCLEM_DISABLE_SANITY_CHECKS=On ..
   - make
   - make test
   - make coverage
