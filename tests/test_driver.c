@@ -4,7 +4,7 @@
 #include <string.h>
 
 const char** find_arg(const char **first, const char **last, const char *arg) {
-  while (first != last) {
+  for (; first != last; first++) {
     if (strcmp(*first, arg) == 0)
       break;
   }
