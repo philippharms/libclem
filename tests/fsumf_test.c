@@ -295,4 +295,6 @@ clem_error_t fsumf_test_roundupward_02(char **result_message) {
       __FILE__, __LINE__, testee, reference);
     return TEST_FAILED;
   }
+
+  return TEST_PASSED;
 }
