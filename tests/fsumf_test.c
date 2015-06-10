@@ -13,15 +13,15 @@ clem_error_t fsumf_test_basic_01(char **result_message) {
   float testee = fsumf(NULL, 0, &err);
 
   if (err != CLEM_SUCCESS) {
-    CREATE_TEST_RESULT_MESSAGE(result_message, "An error occurred in %s:%d",
-                               __FILE__, __LINE__);
+    UNIT_TEST_CREATE_RESULT_MESSAGE(
+      result_message, "An error occurred in %s:%d", __FILE__, __LINE__);
     return TEST_FAILED;
   }
 
   if (testee != reference) {
-    CREATE_TEST_RESULT_MESSAGE(result_message, "An error occurred in %s:%d\n"
-                               " - %a != %a", __FILE__, __LINE__,
-                               testee, reference);
+    UNIT_TEST_CREATE_RESULT_MESSAGE(
+      result_message, "An error occurred in %s:%d\n - %a != %a",
+      __FILE__, __LINE__, testee, reference);
     return TEST_FAILED;
   }
 
@@ -33,8 +33,8 @@ clem_error_t fsumf_test_basic_02(char **result_message) {
   float testee = fsumf(NULL, 1, &err);
 
   if (err != CLEM_INVALID_VALUE) {
-    CREATE_TEST_RESULT_MESSAGE(result_message, "An error occurred in %s:%d\n",
-                               __FILE__, __LINE__);
+    UNIT_TEST_CREATE_RESULT_MESSAGE(
+      result_message, "An error occurred in %s:%d\n", __FILE__, __LINE__);
     return TEST_FAILED;
   }
 
@@ -48,8 +48,8 @@ clem_error_t fsumf_test_basic_03(char **result_message) {
   float testee = fsumf(vals, SIZE_MAX / sizeof(float), &err);
 
   if (err != CLEM_OUT_OF_MEMORY) {
-    CREATE_TEST_RESULT_MESSAGE(result_message, "An error occurred in %s:%d\n",
-                               __FILE__, __LINE__);
+    UNIT_TEST_CREATE_RESULT_MESSAGE(
+      result_message, "An error occurred in %s:%d\n", __FILE__, __LINE__);
     return TEST_FAILED;
   }
 
@@ -64,15 +64,15 @@ clem_error_t fsumf_test_roundtonearest_01(char **result_message) {
   float testee = fsumf(vals, 2, &err);
 
   if (err != CLEM_SUCCESS) {
-    CREATE_TEST_RESULT_MESSAGE(result_message, "An error occurred in %s:%d\n",
-                               __FILE__, __LINE__);
+    UNIT_TEST_CREATE_RESULT_MESSAGE(
+      result_message, "An error occurred in %s:%d\n", __FILE__, __LINE__);
     return TEST_FATAL;
   }
 
   if (testee != reference) {
-    CREATE_TEST_RESULT_MESSAGE(result_message, "An error occurred in %s:%d\n"
-                               " - %a != %a", __FILE__, __LINE__,
-                               testee, reference);
+    UNIT_TEST_CREATE_RESULT_MESSAGE(
+      result_message, "An error occurred in %s:%d\n - %a != %a",
+      __FILE__, __LINE__, testee, reference);
     return TEST_FAILED;
   }
 
@@ -87,15 +87,15 @@ clem_error_t fsumf_test_roundtonearest_02(char **result_message) {
   float testee = fsumf(vals, 2, &err);
 
   if (err != CLEM_SUCCESS) {
-    CREATE_TEST_RESULT_MESSAGE(result_message, "An error occurred in %s:%d\n",
-                               __FILE__, __LINE__);
+    UNIT_TEST_CREATE_RESULT_MESSAGE(
+      result_message, "An error occurred in %s:%d\n", __FILE__, __LINE__);
     return TEST_FATAL;
   }
 
   if (testee != reference) {
-    CREATE_TEST_RESULT_MESSAGE(result_message, "An error occurred in %s:%d\n"
-                               " - %a != %a", __FILE__, __LINE__,
-                               testee, reference);
+    UNIT_TEST_CREATE_RESULT_MESSAGE(
+      result_message, "An error occurred in %s:%d\n - %a != %a",
+      __FILE__, __LINE__, testee, reference);
     return TEST_FAILED;
   }
 
@@ -110,15 +110,15 @@ clem_error_t fsumf_test_roundtonearest_03(char **result_message) {
   float testee = fsumf(vals, 3, &err);
 
   if (err != CLEM_SUCCESS) {
-    CREATE_TEST_RESULT_MESSAGE(result_message, "An error occurred in %s:%d\n",
-                               __FILE__, __LINE__);
+    UNIT_TEST_CREATE_RESULT_MESSAGE(
+      result_message, "An error occurred in %s:%d\n", __FILE__, __LINE__);
     return TEST_FATAL;
   }
 
   if (testee != reference) {
-    CREATE_TEST_RESULT_MESSAGE(result_message, "An error occurred in %s:%d\n"
-                               " - %a != %a", __FILE__, __LINE__,
-                               testee, reference);
+    UNIT_TEST_CREATE_RESULT_MESSAGE(
+      result_message, "An error occurred in %s:%d\n - %a != %a",
+      __FILE__, __LINE__, testee, reference);
     return TEST_FAILED;
   }
 
@@ -129,8 +129,8 @@ clem_error_t fsumf_test_rounddownward_01(char **result_message) {
   float vals[] = { 0x1.fffffep+0, 0x1.p-24 };
 
   if (fesetround(FE_DOWNWARD)) {
-    CREATE_TEST_RESULT_MESSAGE(result_message, "An error occurred in %s:%d\n",
-                               __FILE__, __LINE__);
+    UNIT_TEST_CREATE_RESULT_MESSAGE(
+      result_message, "An error occurred in %s:%d\n", __FILE__, __LINE__);
     return TEST_FATAL;
   }
 
@@ -139,15 +139,15 @@ clem_error_t fsumf_test_rounddownward_01(char **result_message) {
   float testee = fsumf(vals, 2, &err);
 
   if (err != CLEM_SUCCESS) {
-    CREATE_TEST_RESULT_MESSAGE(result_message, "An error occurred in %s:%d\n",
-                               __FILE__, __LINE__);
+    UNIT_TEST_CREATE_RESULT_MESSAGE(
+      result_message, "An error occurred in %s:%d\n", __FILE__, __LINE__);
     return TEST_FATAL;
   }
 
   if (testee != reference) {
-    CREATE_TEST_RESULT_MESSAGE(result_message, "An error occurred in %s:%d\n"
-                               " - %a != %a", __FILE__, __LINE__,
-                               testee, reference);
+    UNIT_TEST_CREATE_RESULT_MESSAGE(
+      result_message, "An error occurred in %s:%d\n - %a != %a",
+      __FILE__, __LINE__, testee, reference);
     return TEST_FAILED;
   }
 
@@ -158,8 +158,8 @@ clem_error_t fsumf_test_rounddownward_02(char **result_message) {
   float vals[] = { -0x1.fffffep+0, -0x1.p-24 };
 
   if (fesetround(FE_DOWNWARD)) {
-    CREATE_TEST_RESULT_MESSAGE(result_message, "An error occurred in %s:%d\n",
-                               __FILE__, __LINE__);
+    UNIT_TEST_CREATE_RESULT_MESSAGE(
+      result_message, "An error occurred in %s:%d\n", __FILE__, __LINE__);
     return TEST_FATAL;
   }
 
@@ -168,15 +168,15 @@ clem_error_t fsumf_test_rounddownward_02(char **result_message) {
   float testee = fsumf(vals, 2, &err);
 
   if (err != CLEM_SUCCESS) {
-    CREATE_TEST_RESULT_MESSAGE(result_message, "An error occurred in %s:%d\n",
-                               __FILE__, __LINE__);
+    UNIT_TEST_CREATE_RESULT_MESSAGE(
+      result_message, "An error occurred in %s:%d\n", __FILE__, __LINE__);
     return TEST_FATAL;
   }
 
   if (testee != reference) {
-    CREATE_TEST_RESULT_MESSAGE(result_message, "An error occurred in %s:%d\n"
-                               " - %a != %a", __FILE__, __LINE__,
-                               testee, reference);
+    UNIT_TEST_CREATE_RESULT_MESSAGE(
+      result_message, "An error occurred in %s:%d\n - %a != %a",
+      __FILE__, __LINE__, testee, reference);
     return TEST_FAILED;
   }
 
@@ -187,8 +187,8 @@ clem_error_t fsumf_test_roundtowardzero_01(char **result_message) {
   float vals[] = { 0x1.fffffep+0, 0x1.p-24 };
 
   if (fesetround(FE_TOWARDZERO)) {
-    CREATE_TEST_RESULT_MESSAGE(result_message, "An error occurred in %s:%d\n",
-                               __FILE__, __LINE__);
+    UNIT_TEST_CREATE_RESULT_MESSAGE(
+      result_message, "An error occurred in %s:%d\n", __FILE__, __LINE__);
     return TEST_FATAL;
   }
 
@@ -197,15 +197,15 @@ clem_error_t fsumf_test_roundtowardzero_01(char **result_message) {
   float testee = fsumf(vals, 2, &err);
 
   if (err != CLEM_SUCCESS) {
-    CREATE_TEST_RESULT_MESSAGE(result_message, "An error occurred in %s:%d\n",
-                               __FILE__, __LINE__);
+    UNIT_TEST_CREATE_RESULT_MESSAGE(
+      result_message, "An error occurred in %s:%d\n", __FILE__, __LINE__);
     return TEST_FATAL;
   }
 
   if (testee != reference) {
-    CREATE_TEST_RESULT_MESSAGE(result_message, "An error occurred in %s:%d\n"
-                               " - %a != %a", __FILE__, __LINE__,
-                               testee, reference);
+    UNIT_TEST_CREATE_RESULT_MESSAGE(
+      result_message, "An error occurred in %s:%d\n - %a != %a",
+      __FILE__, __LINE__, testee, reference);
     return TEST_FAILED;
   }
 
@@ -216,8 +216,8 @@ clem_error_t fsumf_test_roundtowardzero_02(char **result_message) {
   float vals[] = { -0x1.fffffep+0, -0x1.p-24 };
 
   if (fesetround(FE_TOWARDZERO)) {
-    CREATE_TEST_RESULT_MESSAGE(result_message, "An error occurred in %s:%d\n",
-                               __FILE__, __LINE__);
+    UNIT_TEST_CREATE_RESULT_MESSAGE(
+      result_message, "An error occurred in %s:%d\n", __FILE__, __LINE__);
     return TEST_FATAL;
   }
 
@@ -226,15 +226,15 @@ clem_error_t fsumf_test_roundtowardzero_02(char **result_message) {
   float testee = fsumf(vals, 2, &err);
 
   if (err != CLEM_SUCCESS) {
-    CREATE_TEST_RESULT_MESSAGE(result_message, "An error occurred in %s:%d\n",
-                               __FILE__, __LINE__);
+    UNIT_TEST_CREATE_RESULT_MESSAGE(
+      result_message, "An error occurred in %s:%d\n", __FILE__, __LINE__);
     return TEST_FATAL;
   }
 
   if (testee != reference) {
-    CREATE_TEST_RESULT_MESSAGE(result_message, "An error occurred in %s:%d\n"
-                               " - %a != %a", __FILE__, __LINE__,
-                               testee, reference);
+    UNIT_TEST_CREATE_RESULT_MESSAGE(
+      result_message, "An error occurred in %s:%d\n - %a != %a",
+      __FILE__, __LINE__, testee, reference);
     return TEST_FAILED;
   }
 
@@ -245,8 +245,8 @@ clem_error_t fsumf_test_roundupward_01(char **result_message) {
   float vals[] = { 0x1.fffffep+0, 0x1.p-24 };
 
   if (fesetround(FE_UPWARD)) {
-    CREATE_TEST_RESULT_MESSAGE(result_message, "An error occurred in %s:%d\n",
-                               __FILE__, __LINE__);
+    UNIT_TEST_CREATE_RESULT_MESSAGE(
+      result_message, "An error occurred in %s:%d\n", __FILE__, __LINE__);
     return TEST_FATAL;
   }
 
@@ -255,15 +255,15 @@ clem_error_t fsumf_test_roundupward_01(char **result_message) {
   float testee = fsumf(vals, 2, &err);
 
   if (err != CLEM_SUCCESS) {
-    CREATE_TEST_RESULT_MESSAGE(result_message, "An error occurred in %s:%d\n",
-                               __FILE__, __LINE__);
+    UNIT_TEST_CREATE_RESULT_MESSAGE(
+      result_message, "An error occurred in %s:%d\n", __FILE__, __LINE__);
     return TEST_FATAL;
   }
 
   if (testee != reference) {
-    CREATE_TEST_RESULT_MESSAGE(result_message, "An error occurred in %s:%d\n"
-                               " - %a != %a", __FILE__, __LINE__,
-                               testee, reference);
+    UNIT_TEST_CREATE_RESULT_MESSAGE(
+      result_message, "An error occurred in %s:%d\n - %a != %a",
+      __FILE__, __LINE__, testee, reference);
     return TEST_FAILED;
   }
 
@@ -274,8 +274,8 @@ clem_error_t fsumf_test_roundupward_02(char **result_message) {
   float vals[] = { -0x1.fffffep+0, -0x1.p-24 };
 
   if (fesetround(FE_UPWARD)) {
-    CREATE_TEST_RESULT_MESSAGE(result_message, "An error occurred in %s:%d\n",
-                               __FILE__, __LINE__);
+    UNIT_TEST_CREATE_RESULT_MESSAGE(
+      result_message, "An error occurred in %s:%d\n", __FILE__, __LINE__);
     return TEST_FATAL;
   }
 
@@ -284,15 +284,15 @@ clem_error_t fsumf_test_roundupward_02(char **result_message) {
   float testee = fsumf(vals, 2, &err);
 
   if (err != CLEM_SUCCESS) {
-    CREATE_TEST_RESULT_MESSAGE(result_message, "An error occurred in %s:%d\n",
-                               __FILE__, __LINE__);
+    UNIT_TEST_CREATE_RESULT_MESSAGE(
+      result_message, "An error occurred in %s:%d\n", __FILE__, __LINE__);
     return TEST_FATAL;
   }
 
   if (testee != reference) {
-    CREATE_TEST_RESULT_MESSAGE(result_message, "An error occurred in %s:%d\n"
-                               " - %a != %a", __FILE__, __LINE__,
-                               testee, reference);
+    UNIT_TEST_CREATE_RESULT_MESSAGE(
+      result_message, "An error occurred in %s:%d\n - %a != %a",
+      __FILE__, __LINE__, testee, reference);
     return TEST_FAILED;
   }
 }

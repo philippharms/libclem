@@ -11,10 +11,12 @@ unit_test_result_t det3x3f_test_01(char **result_message) {
   err = det3x3f(matrices, NULL);
 
   if (err != CLEM_SUCCESS) {
-    CREATE_TEST_RESULT_MESSAGE(result_message, "An error occurred in %s:%d",
-                               __FILE__, __LINE__);
+    UNIT_TEST_CREATE_RESULT_MESSAGE(
+      result_message, "An error occurred in %s:%d", __FILE__, __LINE__);
     return TEST_FAILED;
   }
+
+  matrix3x3f_buffer_free(matrices);
 
   return TEST_PASSED;
 }
@@ -30,10 +32,12 @@ unit_test_result_t det3x3f_test_02(char **result_message) {
   err = det3x3f(matrices, NULL);
 
   if (err != CLEM_INVALID_VALUE) {
-    CREATE_TEST_RESULT_MESSAGE(result_message, "An error occurred in %s:%d",
-                               __FILE__, __LINE__);
+    UNIT_TEST_CREATE_RESULT_MESSAGE(
+      result_message, "An error occurred in %s:%d", __FILE__, __LINE__);
     return TEST_FAILED;
   }
+
+  matrix3x3f_buffer_free(matrices);
 
   return TEST_PASSED;
 }
@@ -56,25 +60,27 @@ unit_test_result_t det3x3f_test_03(char **result_message) {
   err = matrix3x3f_buffer_pushback_arr(&buffer, matrix);
 
   if (err != CLEM_SUCCESS) {
-    CREATE_TEST_RESULT_MESSAGE(result_message, "An error occurred in %s:%d",
-                               __FILE__, __LINE__);
+    UNIT_TEST_CREATE_RESULT_MESSAGE(
+      result_message, "An error occurred in %s:%d", __FILE__, __LINE__);
     return TEST_FAILED;
   }
 
   err = det3x3f(buffer, &testee);
 
   if (err != CLEM_SUCCESS) {
-    CREATE_TEST_RESULT_MESSAGE(result_message, "An error occurred in %s:%d",
-                               __FILE__, __LINE__);
+    UNIT_TEST_CREATE_RESULT_MESSAGE(
+      result_message, "An error occurred in %s:%d", __FILE__, __LINE__);
     return TEST_FAILED;
   }
 
   if (testee != reference) {
-    CREATE_TEST_RESULT_MESSAGE(result_message, "An error occurred in %s:%d:\n"
-                               " - %a != %a",
-                               __FILE__, __LINE__, testee, reference);
+    UNIT_TEST_CREATE_RESULT_MESSAGE(
+      result_message, "An error occurred in %s:%d:\n - %a != %a",
+      __FILE__, __LINE__, testee, reference);
     return TEST_FAILED;
   }
+
+  matrix3x3f_buffer_free(buffer);
 
   return TEST_PASSED;
 }

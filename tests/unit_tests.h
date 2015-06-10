@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define CREATE_TEST_RESULT_MESSAGE(output, format, ...) \
+#define UNIT_TEST_CREATE_RESULT_MESSAGE(output, format, ...) \
 int ret = snprintf(NULL, 0u, format, ##__VA_ARGS__); \
 if (ret < 0) { \
   *output = NULL; \
