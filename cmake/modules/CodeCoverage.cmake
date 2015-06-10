@@ -140,7 +140,7 @@ function(enable_coverage lang)
   if(CMAKE_${lang}_COMPILER_ID STREQUAL "GNU")
     _codecov_gnu_setup()
   else()
-    message(FATAL_ERROR "code coverage is not implemented for CMAKE_${lang}_COMPILER_ID")
+    message(FATAL_ERROR "code coverage is not implemented for ${CMAKE_${lang}_COMPILER_ID}")
   endif()
 
   if(CodeCov_${lang}_FLAGS AND CodeCov_${lang}_LINK_FLAGS)
