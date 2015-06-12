@@ -10,13 +10,27 @@ option(CLEM_DISABLE_SANITY_CHECKS "disable all checks that prevent building - no
 
 include(TestCForNeedsLibM)
 include(TestCForIEEE754)
+include(TestFloatBigEndian)
+include(TestBigEndian)
+test_big_endian(CMAKE_BIG_ENDIAN)
 if (NOT CLEM_DISABLE_SANITY_CHECKS AND NOT CMAKE_C_IEEE754_FLOATS)
-  message(FATAL_ERROR
+  message(SEND_ERROR
     "Your system seems not to provide IEEE 754 standard compliant floating "
     "point number support. This library relies on standard compliancy and it "
     "is not recommended to use it nonetheless. If you mean to do this, rerun "
     "cmake with -DCLEM_DISABLE_SANITY_CHECKS=On."
   )
+endif()
+
+if(CMAKE_BIG_ENDIAN)
+  add_definitions("-DCLEM_ENDIANNESS=4321")
+else()
+  add_definitions("-DCLEM_ENDIANNESS=1234")
+endif()
+if(CMAKE_FLOAT_BIG_ENDIAN)
+  add_definitions("-DCLEM_FLOAT_ENDIANNESS=4321")
+else()
+  add_definitions("-DCLEM_FLOAT_ENDIANNESS=1234")
 endif()
 
 include(SetInstallDirectories)
