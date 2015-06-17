@@ -26,11 +26,17 @@ if(NOT DEFINED CodeCov_BUILD_COVERAGE)
   option(CodeCov_BUILD_COVERAGE "Build coverage targets" On)
 endif()
 
+if(NOT DEFINED CodeCov_TOOLSET)
+  set(CodeCov_TOOLSET "lcov" CACHE STRING
+    "The tool to generate code coverage report.")
+endif()
+
+
 function(_codecov_failure_message msg)
   message(FATAL_ERROR "${msg}")
 endfunction()
 
-macro(_codecov_gnu_lcov_branch_workaround)
+macro(_codecov_lcov_branch_workaround)
   execute_process(COMMAND ${CodeCov_GNU_LCOV} "--version"
                   OUTPUT_VARIABLE _codecov_gnu_lcov_version_dump)
   string(REGEX MATCH "[0-9.]+" _codecov_gnu_lcov_version_string
@@ -43,7 +49,7 @@ macro(_codecov_gnu_lcov_branch_workaround)
   endif()
 endmacro()
 
-function(_codecov_gnu_setup)
+function(_codecov_lcov_setup)
   find_program(CodeCov_GNU_LCOV lcov)
   find_program(CodeCov_GNU_GENHTML genhtml)
 
@@ -65,7 +71,7 @@ function(_codecov_gnu_setup)
 
   mark_as_advanced(CodeCov_GNU_LCOV CodeCov_GNU_GENHTML)
 
-  _codecov_gnu_lcov_branch_workaround()
+  _codecov_lcov_branch_workaround()
 
   add_custom_target(codecov_prerun
     ${CodeCov_GNU_LCOV} --quiet --directory . --zerocounters ${_CodeCov_GNU_LCOV_BRANCH_COVERAGE_OPTION}
@@ -101,6 +107,9 @@ function(enable_coverage lang)
       set(CodeCov_${lang}_FLAGS_INTERNAL "-g" "-O0" "--coverage")
       set(CodeCov_${lang}_LINK_FLAGS_INTERNAL "--coverage")
     endif()
+  elseif(CMAKE_${lang}_COMPILER_ID STREQUAL "AppleClang")
+    set(CodeCov_${lang}_FLAGS_INTERNAL "-g" "-O0" "-fprofile-arcs" "-ftest-coverage")
+    set(CodeCov_${lang}_LINK_FLAGS_INTERNAL "-fprofile-arcs -ftest-coverage")
   elseif(CMAKE_${lang}_COMPILER_ID STREQUAL "Clang")
     include(Check${lang}CompilerFlag)
     if(${lang} STREQUAL "C")
@@ -137,10 +146,10 @@ function(enable_coverage lang)
       "These flags will be used when a target with coverage is linked.")
   mark_as_advanced(CodeCov_${lang}_FLAGS CodeCov_${lang}_LINK_FLAGS)
 
-  if(CMAKE_${lang}_COMPILER_ID STREQUAL "GNU")
-    _codecov_gnu_setup()
+  if(CodeCov_TOOLSET STREQUAL "lcov")
+    _codecov_lcov_setup()
   else()
-    message(FATAL_ERROR "code coverage is not implemented for ${CMAKE_${lang}_COMPILER_ID}")
+    message(FATAL_ERROR "unknown code coverage toolset")
   endif()
 
   if(CodeCov_${lang}_FLAGS AND CodeCov_${lang}_LINK_FLAGS)
