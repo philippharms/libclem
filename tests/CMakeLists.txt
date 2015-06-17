@@ -47,8 +47,6 @@ if(CodeCov_BUILD_COVERAGE)
 
   if(CMAKE_C_NEEDS_LIBM)
     target_link_libraries(clem-coverage-driver PRIVATE "m")
-  else()
-    message(FATAL_ERROR "no")
   endif()
 endif()
 
