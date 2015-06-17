@@ -12,6 +12,7 @@
 # define CLEM_MANTISSA_MASKf 0xfff00000
 #endif
 
+static inline
 float splitf(float arg, float* lo) {
   // TODO: unclear behavior for special numbers
   uint32_t mask = CLEM_MANTISSA_MASKf;
