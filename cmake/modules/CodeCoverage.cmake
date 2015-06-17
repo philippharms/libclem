@@ -26,8 +26,8 @@ if(NOT DEFINED CodeCov_BUILD_COVERAGE)
   option(CodeCov_BUILD_COVERAGE "Build coverage targets" On)
 endif()
 
-if(NOT DEFINED CodeCov_TOOLSET)
-  set(CodeCov_TOOLSET "lcov" CACHE STRING
+if(NOT DEFINED CodeCov_REPORT_TOOLSET)
+  set(CodeCov_REPORT_TOOLSET "lcov" CACHE STRING
     "The tool to generate code coverage report.")
 endif()
 
@@ -146,7 +146,7 @@ function(enable_coverage lang)
       "These flags will be used when a target with coverage is linked.")
   mark_as_advanced(CodeCov_${lang}_FLAGS CodeCov_${lang}_LINK_FLAGS)
 
-  if(CodeCov_TOOLSET STREQUAL "lcov")
+  if(CodeCov_REPORT_TOOLSET STREQUAL "lcov")
     _codecov_lcov_setup()
   else()
     message(FATAL_ERROR "unknown code coverage toolset")
