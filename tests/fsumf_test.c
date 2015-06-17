@@ -7,7 +7,7 @@
 #include <fenv.h>
 #include <stdint.h>
 
-clem_error_t fsumf_test_basic_01(char **result_message) {
+unit_test_result_t fsumf_test_basic_01(char **result_message) {
   clem_error_t err;
   float reference = 0.f;
   float testee = fsumf(NULL, 0, &err);
@@ -28,7 +28,7 @@ clem_error_t fsumf_test_basic_01(char **result_message) {
   return TEST_PASSED;
 }
 
-clem_error_t fsumf_test_basic_02(char **result_message) {
+unit_test_result_t fsumf_test_basic_02(char **result_message) {
   clem_error_t err;
   float testee = fsumf(NULL, 1, &err);
 
@@ -41,7 +41,7 @@ clem_error_t fsumf_test_basic_02(char **result_message) {
   return TEST_PASSED;
 }
 
-clem_error_t fsumf_test_basic_03(char **result_message) {
+unit_test_result_t fsumf_test_basic_03(char **result_message) {
   float vals[1] = { 0.f };
 
   clem_error_t err;
@@ -56,7 +56,7 @@ clem_error_t fsumf_test_basic_03(char **result_message) {
   return TEST_PASSED;
 }
 
-clem_error_t fsumf_test_roundtonearest_01(char **result_message) {
+unit_test_result_t fsumf_test_roundtonearest_01(char **result_message) {
   float vals[] = { 0x1.fffffep+0, 0x1.p-24};
 
   clem_error_t err;
@@ -79,7 +79,7 @@ clem_error_t fsumf_test_roundtonearest_01(char **result_message) {
   return TEST_PASSED;
 }
 
-clem_error_t fsumf_test_roundtonearest_02(char **result_message) {
+unit_test_result_t fsumf_test_roundtonearest_02(char **result_message) {
   float vals[] = { 0x1.fffffdp+0, 0x1.p-24};
 
   clem_error_t err;
@@ -102,7 +102,7 @@ clem_error_t fsumf_test_roundtonearest_02(char **result_message) {
   return TEST_PASSED;
 }
 
-clem_error_t fsumf_test_roundtonearest_03(char **result_message) {
+unit_test_result_t fsumf_test_roundtonearest_03(char **result_message) {
   float vals[] = { 0x1.fffffep-49, 0x1.fffffep-25, 0x1.fffffep+0 };
 
   clem_error_t err;
@@ -125,7 +125,7 @@ clem_error_t fsumf_test_roundtonearest_03(char **result_message) {
   return TEST_PASSED;
 }
 
-clem_error_t fsumf_test_rounddownward_01(char **result_message) {
+unit_test_result_t fsumf_test_rounddownward_01(char **result_message) {
   float vals[] = { 0x1.fffffep+0, 0x1.p-24 };
 
   if (fesetround(FE_DOWNWARD)) {
@@ -154,7 +154,7 @@ clem_error_t fsumf_test_rounddownward_01(char **result_message) {
   return TEST_PASSED;
 }
 
-clem_error_t fsumf_test_rounddownward_02(char **result_message) {
+unit_test_result_t fsumf_test_rounddownward_02(char **result_message) {
   float vals[] = { -0x1.fffffep+0, -0x1.p-24 };
 
   if (fesetround(FE_DOWNWARD)) {
@@ -183,7 +183,7 @@ clem_error_t fsumf_test_rounddownward_02(char **result_message) {
   return TEST_PASSED;
 }
 
-clem_error_t fsumf_test_roundtowardzero_01(char **result_message) {
+unit_test_result_t fsumf_test_roundtowardzero_01(char **result_message) {
   float vals[] = { 0x1.fffffep+0, 0x1.p-24 };
 
   if (fesetround(FE_TOWARDZERO)) {
@@ -212,7 +212,7 @@ clem_error_t fsumf_test_roundtowardzero_01(char **result_message) {
   return TEST_PASSED;
 }
 
-clem_error_t fsumf_test_roundtowardzero_02(char **result_message) {
+unit_test_result_t fsumf_test_roundtowardzero_02(char **result_message) {
   float vals[] = { -0x1.fffffep+0, -0x1.p-24 };
 
   if (fesetround(FE_TOWARDZERO)) {
@@ -241,7 +241,7 @@ clem_error_t fsumf_test_roundtowardzero_02(char **result_message) {
   return TEST_PASSED;
 }
 
-clem_error_t fsumf_test_roundupward_01(char **result_message) {
+unit_test_result_t fsumf_test_roundupward_01(char **result_message) {
   float vals[] = { 0x1.fffffep+0, 0x1.p-24 };
 
   if (fesetround(FE_UPWARD)) {
@@ -270,7 +270,7 @@ clem_error_t fsumf_test_roundupward_01(char **result_message) {
   return TEST_PASSED;
 }
 
-clem_error_t fsumf_test_roundupward_02(char **result_message) {
+unit_test_result_t fsumf_test_roundupward_02(char **result_message) {
   float vals[] = { -0x1.fffffep+0, -0x1.p-24 };
 
   if (fesetround(FE_UPWARD)) {
